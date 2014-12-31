@@ -7,11 +7,10 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from tweepy import API
 
-import tableflipbot.config as config
 from tableflipbot.followerflipper import FollowFlipper
 from tableflipbot.trendflipper import flip_trends
 
-def run_followflipper():
+def run_followflipper(config):
     auth = OAuthHandler(config.consumer_key,config. consumer_secret)
     auth.set_access_token(config.access_token, config.access_token_secret)
 
@@ -21,7 +20,7 @@ def run_followflipper():
     stream.userstream(_with='user')
 
 
-def run_trendflipper():
+def run_trendflipper(config):
     auth = OAuthHandler(config.consumer_key,config. consumer_secret)
     auth.set_access_token(config.access_token, config.access_token_secret)
 
@@ -33,20 +32,17 @@ def run_trendflipper():
 
 if __name__ == "__main__":
 
+    import tableflipbot.config as config
+
     log_fmt = "%(levelname)-6s %(processName)s %(filename)-12s:%(lineno)-4d at %(asctime)s: %(message)s"
     logging.basicConfig(level=logging.INFO, format=log_fmt)
 
-    #run_followflipper(config)
+    procs = []
+    procs.append(Process(target=run_followflipper, args=(config,)))
+    procs.append(Process(target=run_trendflipper, args=(config,)))
 
-    run_trendflipper()
+    for proc in procs:
+        proc.start()
 
-    '''
-    stream_proc = Process(target=run_stream_from_config, args=(config,))
-    image_proc = Process(target=run_image_processor_from_config, args=(config,))
-
-    stream_proc.start()
-    image_proc.start()
-
-    stream_proc.join()
-    image_proc.join()
-    '''
+    for proc in procs:
+        proc.join()

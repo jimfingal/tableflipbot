@@ -2,8 +2,8 @@ import re
 import time
 from flipper import get_flipped_string
 
-#SLEEP_INTERVAL = 60 * 60 # Once an hour
-SLEEP_INTERVAL = 10
+SLEEP_INTERVAL = 60 * 60 # Once an hour
+#SLEEP_INTERVAL = 10
 
 REDIS_COL = 'flipped'
 
