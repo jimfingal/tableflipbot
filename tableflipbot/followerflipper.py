@@ -1,6 +1,7 @@
 from tweepy.streaming import StreamListener
 from flipper import get_flipped_string
 import logging
+import config
 
 class FollowFlipper(StreamListener):
 
@@ -17,7 +18,7 @@ class FollowFlipper(StreamListener):
                 string_to_flip = status._json["source"]["screen_name"]
                 source_user = string_to_flip
 
-            if string_to_flip:
+            if string_to_flip and source_user.lower() is not config.app_screen_name:
                 logging.info("Flipping: %s" % string_to_flip)
                 flipped = get_flipped_string(string_to_flip.decode('utf-8'))
 
