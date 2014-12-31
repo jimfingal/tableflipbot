@@ -1,5 +1,7 @@
 import re
 import time
+import logging
+
 from flipper import get_flipped_string
 
 SLEEP_INTERVAL = 60 * 60 # Once an hour
@@ -41,7 +43,7 @@ def flip_trends(api, redis_client):
                 redis_client.sadd(REDIS_COL, hashtag)
                 break
             else:
-                print "%s has already been flipped" % hashtag
+                logging.info("%s has already been flipped, skipping" % hashtag)
                 continue
 
         time.sleep(SLEEP_INTERVAL)

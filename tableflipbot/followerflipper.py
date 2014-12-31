@@ -18,10 +18,10 @@ class FollowFlipper(StreamListener):
                 source_user = string_to_flip
 
             if string_to_flip:
-                print "Flipping: %s" % string_to_flip
+                logging.info("Flipping: %s" % string_to_flip)
                 flipped = get_flipped_string(string_to_flip.decode('utf-8'))
 
-                print "Flipped text (%s) to: %s" % (string_to_flip, flipped.decode('utf-8'))
+                logging.info("Flipped text (%s) to: %s" % (string_to_flip, flipped.decode('utf-8')))
 
                 status_out = ". @" + source_user + " ::\n" + flipped.decode('utf-8')
 
