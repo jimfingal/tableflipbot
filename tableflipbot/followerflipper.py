@@ -1,7 +1,11 @@
 from tweepy.streaming import StreamListener
 from flipper import get_flipped_string
 import logging
-import config
+from .config import app_screen_name
+
+def valid_flip_target(string_to_flip, source_user):
+    return string_to_flip and source_user.lower() != app_screen_name and \
+                string_to_flip.lower() != app_screen_name
 
 class FollowFlipper(StreamListener):
 
@@ -20,7 +24,8 @@ class FollowFlipper(StreamListener):
                 string_to_flip = status._json["source"]["screen_name"]
                 source_user = string_to_flip
 
-            if string_to_flip and source_user.lower() is not config.app_screen_name:
+            if valid_flip_target(string_to_flip, source_user):           
+
                 logging.info("Flipping: %s" % string_to_flip)
                 flipped = get_flipped_string(string_to_flip.decode('utf-8'))
 
@@ -32,3 +37,5 @@ class FollowFlipper(StreamListener):
 
         except Exception as e:
             logging.exception(e)
+
+if __name__ == "__main__":
