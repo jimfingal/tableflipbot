@@ -49,7 +49,7 @@ def run_oedflipper(config):
     api = get_api(auth)
     redis_client = redis.from_url(config.redis_url)
 
-    flip_trends(api, redis_client, config.redis_col)
+    flip_word_of_day(api, redis_client, config.redis_col)
 
 
 if __name__ == "__main__":
