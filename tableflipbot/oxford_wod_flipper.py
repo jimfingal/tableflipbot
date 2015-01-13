@@ -10,10 +10,10 @@ SLEEP_INTERVAL = 60 * 60 * 24# Once a day
 
 def get_word_of_day():
 
-    oxford_homepage = requests.get("http://www.oxforddictionaries.com/us/")
+    oxford_homepage = requests.get("http://www.oed.com/")
     soup = BeautifulSoup(oxford_homepage.text)
 
-    wod = soup.select(".headword-ofd")
+    wod = soup.select(".wordOfTheDay .hw")
 
     if len(wod):
         word_text = wod.pop().text.lower().strip()
