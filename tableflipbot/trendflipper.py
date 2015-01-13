@@ -5,10 +5,6 @@ import logging
 from flipper import get_flipped_string
 
 SLEEP_INTERVAL = 60 * 60 # Once an hour
-#SLEEP_INTERVAL = 10
-
-REDIS_COL = 'flipped'
-
 
 def get_trend_terms(api):
     """Calls the Twitter API and parses out trend names"""
@@ -31,16 +27,16 @@ def get_flipped_trends(api):
             pass
 
 
-def flip_trends(api, redis_client):
+def flip_trends(api, redis_client, redis_used_key):
 
     while True:
 
         for flipped_trend, hashtag in get_flipped_trends(api):
 
-            if not redis_client.sismember(REDIS_COL, hashtag):
+            if not redis_client.sismember(redis_used_key, hashtag):
                 tweet = "%s  #%s" % (flipped_trend.decode('utf-8'), hashtag.decode('utf-8'))
                 api.update_status(tweet)
-                redis_client.sadd(REDIS_COL, hashtag)
+                redis_client.sadd(redis_used_key, hashtag)
                 break
             else:
                 logging.info("%s has already been flipped, skipping" % hashtag)
