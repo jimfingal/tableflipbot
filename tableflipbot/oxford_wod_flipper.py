@@ -10,15 +10,20 @@ SLEEP_INTERVAL = 60 * 60 * 12 # Twice a day
 
 def get_word_of_day():
 
-    oxford_homepage = requests.get("http://www.oed.com/")
-    soup = BeautifulSoup(oxford_homepage.text)
+    try:
+        
+        oxford_homepage = requests.get("http://www.oed.com/")
+        soup = BeautifulSoup(oxford_homepage.text)
 
-    wod = soup.select(".wordOfTheDay .hw")
+        wod = soup.select(".wordOfTheDay .hw")
 
-    if len(wod):
-        word_text = wod.pop().text.lower().strip()
-        return word_text
-    else:
+        if len(wod):
+            word_text = wod.pop().text.lower().strip()
+            return word_text
+        else:
+            return None
+
+    except Exception:
         return None
 
 
