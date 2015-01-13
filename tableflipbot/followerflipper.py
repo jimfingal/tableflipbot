@@ -34,8 +34,8 @@ class FollowFlipper(StreamListener):
                 status_out = ". @" + source_user + " ::\n" + flipped.decode('utf-8')
 
                 self.api.update_status(status_out)
+            else:
+                logging.info("Not flipping invalid %s" % string_to_flip)
 
         except Exception as e:
             logging.exception(e)
-
-if __name__ == "__main__":
