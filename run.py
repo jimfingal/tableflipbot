@@ -30,12 +30,22 @@ def run_followflipper(config):
 
     flipper = FollowFlipper(api=api)
 
+    '''
     run_user_stream(config.consumer_key, 
                     config.consumer_secret,
                     config.access_token,
                     config.access_token_secret, 
                     flipper)
+    '''
 
+    stream = Stream(auth, flipper)
+
+    logging.info("Attempting to connect the stream.")
+
+    stream.userstream(_with='user')
+
+    logging.info("Exiting from stream....")
+    
 
 def run_trendflipper(config):
 
