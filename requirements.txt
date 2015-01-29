@@ -6,3 +6,4 @@ requests-oauthlib==0.4.1
 six==1.7.3
 tweepy==3.1.0
 wsgiref==0.1.2
+git+https://github.com/jimmytheleaf/botutils.git@93014bc57a547c91ed3bdcac6cc799be92946709

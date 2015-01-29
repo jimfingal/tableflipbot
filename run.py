@@ -13,6 +13,7 @@ from tableflipbot.oxford_wod_flipper import flip_word_of_day
 
 import tableflipbot.config as config
 
+from botutils.stream import run_user_stream
 
 def get_auth(config):
     auth = OAuthHandler(config.consumer_key,config. consumer_secret)
@@ -29,11 +30,12 @@ def run_followflipper(config):
 
     flipper = FollowFlipper(api=api)
 
-    stream = Stream(auth, flipper)
+    run_user_stream(config.consumer_key, 
+                    config.consumer_secret,
+                    config.access_token,
+                    config.access_token_secret, 
+                    flipper)
 
-    logging.info("Attempting to connect the stream.")
-
-    stream.userstream(_with='user')
 
 def run_trendflipper(config):
 
